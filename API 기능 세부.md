@@ -2,7 +2,7 @@
 
 ## - Auth
   
-### 회원가입 (sign-in) 
+### 로그인 (sign-in) 
   
 - 클라이언트로부터 요청 (request body에 데이터가 포함되어 있음)  
   
