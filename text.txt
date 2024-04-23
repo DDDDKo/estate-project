@@ -3,8 +3,71 @@
 1. 명세서 작성
 2. 데이터베이스 작성
 3. API 명세서 작성
+4. 프로젝트 생성
+   
+   4 - 1프론트 프로젝트 생성
+   npx create-react-app font-app --template typescript
+   (README.md 생성 이유 아무것도 없으면 폴더가 깃허브에 올라가지 않기 때문에)
+   기본적인 내용물 삭제
+      views 폴더 생성
+         README.md 파일 생성
+      layouts 폴더 생성
+         README.md 파일 생성
+      components 폴더 생성
+         README.md 파일 생성
+      assets 폴더 생성
+         README.md 파일 생성
+      types 폴더 생성
+         README.md 파일 생성
+      utils 폴더 생성
+         README.md 파일 생성
+      constant 폴더 생성
+         README.md 파일 생성
+      stores 폴더 생성
+         README.md 파일 생성
+      hooks 폴더 생성
+         README.md 파일 생성
+      apis 폴더 생성
+         README.md 파일 생성
+
+   4 - 2백엔드 프로젝트 생성
+   dependencies 추가
+   Spring Web, Lombok, Validation, Mysql Driver, Spring Data JPA, Spring Security, OAuth2 Client, jjwt-api, jjwt-impl, jjwt-jackson
+
+   src/main/java/com/estate/back폴더 안에
+      controller 폴더 생성
+         README.md 파일 생성
+      service 폴더 생성
+         README.md 파일 생성
+         service폴더 안에 implementation 폴더 생성
+            README.md 파일 생성
+      repository 폴더 생성
+         README.md 파일 생성
+      config 폴더 생성
+         README.md 파일 생성
+      filter 폴더 생성
+         README.md 파일 생성
+      handler 폴더 생성
+         README.md 파일 생성
+      provider 폴더 생성
+         README.md 파일 생성
+      dto 폴더 생성
+         README.md 파일 생성
+         request 폴더 생성
+            README.md 파일 생성
+         response 폴더 생성
+            README.md 파일 생성
+      entity 폴더 생성
+         README.md 파일 생성
+      common 폴더 생성
+         README.md 파일 생성
+         common 폴더 안에 object 폴더 생성
+            README.md 파일 생성
+         common 폴더 안에 util 폴더 생성
+            README.md 파일 생성
 
 
+   4 - 3 만약 부모 폴더 안에 .git이 있다면 각 프로젝트에서 .git 제거
 
 
 
