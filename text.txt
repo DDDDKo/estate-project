@@ -68,7 +68,8 @@
 
 
    4 - 3 만약 부모 폴더 안에 .git이 있다면 각 프로젝트에서 .git 제거
-
+5. 백엔드 프로젝트에서 (웹설정) webSecurityConfig 설정
+6. 백엔드 프로젝트에서 JwtProvider 설정
 
 
 

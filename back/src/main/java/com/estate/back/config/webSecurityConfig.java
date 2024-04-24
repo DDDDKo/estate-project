@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 // Spring Web Security 설정
 // - Basic 인증 미사용
@@ -28,9 +31,26 @@ public class webSecurityConfig {
             .csrf(CsrfConfigurer::disable)
             .sessionManagement(sessionManagement -> sessionManagement
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            );
+            )
+            .cors(cors -> cors
+                .configurationSource(corsConfigurationSource()));
+        
+        return httpSecurity.build();
     }
 
     // CORS 정책
+    @Bean
+    protected CorsConfigurationSource corsConfigurationSource () {
+
+        CorsConfiguration cofiguration = new CorsConfiguration();
+        cofiguration.addAllowedOrigin("*");
+        cofiguration.addAllowedHeader("*");
+        cofiguration.addAllowedMethod("*");
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", cofiguration);
+
+        return source;
+    }
 
 }
