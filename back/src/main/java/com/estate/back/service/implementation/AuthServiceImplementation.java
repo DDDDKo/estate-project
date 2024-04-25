@@ -3,6 +3,7 @@ package com.estate.back.service.implementation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.estate.back.common.util.EmailAuthNumberUtil;
 import com.estate.back.dto.request.auth.EmailAuthCheckRequestDto;
 import com.estate.back.dto.request.auth.EmailAuthRequestDto;
 import com.estate.back.dto.request.auth.IdCheckRequestDto;
@@ -10,9 +11,13 @@ import com.estate.back.dto.request.auth.SignInRequestDto;
 import com.estate.back.dto.request.auth.SignUpRequestDto;
 import com.estate.back.dto.response.ResponseDto;
 import com.estate.back.dto.response.auth.SignInResponseDto;
+import com.estate.back.entity.EmailAuthNumberEntity;
+import com.estate.back.provider.MailProvider;
+import com.estate.back.repository.EmailAuthNumberRepository;
 import com.estate.back.repository.UserRepository;
 import com.estate.back.service.AuthService;
 
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 
 // Auth 모듈의 비즈니스 로직 구현체
@@ -22,6 +27,8 @@ import lombok.RequiredArgsConstructor;
 public class AuthServiceImplementation implements AuthService{
 
     private final UserRepository userRepository;
+    private final EmailAuthNumberRepository emailAuthNumberRepository;
+    private final MailProvider mailProvider;
 
     @Override
     public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
@@ -31,6 +38,7 @@ public class AuthServiceImplementation implements AuthService{
             exception.printStackTrace();
             return SignInResponseDto.databaseError();
         }
+        return null;
     }
 
     @Override
@@ -56,7 +64,19 @@ public class AuthServiceImplementation implements AuthService{
             boolean existedEmail = userRepository.existsByUserEmail(userEmail);
             if(existedEmail) return ResponseDto.duplicatedEmail();
 
-        }catch (Exception exception){
+            String authNumber =EmailAuthNumberUtil.createCodeNumber();
+
+            EmailAuthNumberEntity emailAuthNumberEntity = new EmailAuthNumberEntity(userEmail, authNumber);
+            emailAuthNumberRepository.save(emailAuthNumberEntity);
+
+            mailProvider.mailAuthSend(userEmail, authNumber);
+
+        } catch (MessagingException exception){
+            exception.printStackTrace();
+            // 전송중 에러 발생시 저장한 이메일과 이메일인증번호 삭제
+            // emailAuthNumberRepository.delete(emailAuthNumberEntity);
+            return ResponseDto.mailSendFailed();
+        } catch (Exception exception){
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
@@ -72,6 +92,7 @@ public class AuthServiceImplementation implements AuthService{
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
+        return null;
     }
 
     @Override
@@ -82,6 +103,7 @@ public class AuthServiceImplementation implements AuthService{
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
+        return null;
     }
 
 
