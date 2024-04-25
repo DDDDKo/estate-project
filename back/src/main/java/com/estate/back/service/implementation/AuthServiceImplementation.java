@@ -15,6 +15,7 @@ import com.estate.back.dto.response.ResponseDto;
 import com.estate.back.dto.response.auth.SignInResponseDto;
 import com.estate.back.entity.EmailAuthNumberEntity;
 import com.estate.back.entity.UserEntity;
+import com.estate.back.provider.JwtProvider;
 import com.estate.back.provider.MailProvider;
 import com.estate.back.repository.EmailAuthNumberRepository;
 import com.estate.back.repository.UserRepository;
@@ -33,18 +34,35 @@ public class AuthServiceImplementation implements AuthService{
     private final EmailAuthNumberRepository emailAuthNumberRepository;
 
     private final MailProvider mailProvider;
+    private final JwtProvider jwtProvider;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
+
+        String accessToken = null;
+
         try{
-            
+
+            String userId = dto.getUserId();
+            String userPassword = dto.getUserPassword();
+
+            UserEntity userEntity = userRepository.findByUserId(userId);
+            if(userEntity == null) return ResponseDto.signInFailed();
+
+            String encodedPassword = userEntity.getUserPassword();
+            boolean isMatched = passwordEncoder.matches(userPassword, encodedPassword);
+            if(!isMatched) return ResponseDto.signInFailed();
+
+            accessToken = jwtProvider.create(userId);
+            if(accessToken == null) return ResponseDto.TokenCreationFailed();
+
         }catch (Exception exception){
             exception.printStackTrace();
-            return SignInResponseDto.databaseError();
+            return ResponseDto.databaseError();
         }
-        return null;
+        return SignInResponseDto.success(accessToken);
     }
 
     @Override

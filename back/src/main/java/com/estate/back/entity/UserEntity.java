@@ -29,5 +29,7 @@ public class UserEntity {
         this.userId = dto.getUserId();
         this.userPassword = dto.getUserPassword();
         this.userEmail = dto.getUserEmail();
+        this.userRole = "ROLE_USER";
+        this.joinPath = "HOME";
     }
 }
