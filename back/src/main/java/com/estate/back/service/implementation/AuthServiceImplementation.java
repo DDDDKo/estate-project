@@ -52,10 +52,16 @@ public class AuthServiceImplementation implements AuthService{
     public ResponseEntity<ResponseDto> emailAuth(EmailAuthRequestDto dto) {
         try{
 
+            String userEmail = dto.getUserEmail();
+            boolean existedEmail = userRepository.existsByUserEmail(userEmail);
+            if(existedEmail) return ResponseDto.duplicatedEmail();
+
         }catch (Exception exception){
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
+
+        return ResponseDto.success();
     }
 
     @Override

@@ -74,6 +74,19 @@
 8. Security Filter 작업
 
 
+회원가입에 이메일 인증을 위한 이메일을 보내기 위한 의존성 추가해야함
+implementation 'org.springframework.boot:spring-boot-starter-mail'
+어떤 계정으로 보낼지도 정해야함(개발용 이메일 만드는것을 추천)
+application.properties에 추가
+# GMail SMTP 연결
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username= 이메일보낼 계정의 이메일
+spring.mail.password= 생성한 비밀번호
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.starttls.required=true
+
+
 
 로그인 로직
 
