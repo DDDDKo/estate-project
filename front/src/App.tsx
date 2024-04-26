@@ -1,8 +1,23 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { Route, Routes } from "react-router";
+import { AUTH_PATH, LOCAL_PATH, QNA_DETALE_PATH, QNA_PATH, QNA_UPDATE_PATH, QNA_WRITE_PATH, RATIO_PARH, SERVICE_PATH } from "./constant";
 
 function App() {
-  return <></>;
+    return (
+        <Routes>
+            <Route path={AUTH_PATH} element={<></>} />
+            <Route path={SERVICE_PATH} element={<></>} >
+                <Route path={LOCAL_PATH} element={<></>} />
+                <Route path={RATIO_PARH} element={<></>} />
+                <Route path={QNA_PATH} element={<></>} >
+                    <Route path={QNA_DETALE_PATH} element={<></>} />
+                    <Route path={QNA_WRITE_PATH} element={<></>} />
+                    <Route path={QNA_UPDATE_PATH} element={<></>} />
+                </Route>
+            </Route>
+        </Routes>
+    );
 }
 
 export default App;
