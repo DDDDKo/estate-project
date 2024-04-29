@@ -24,7 +24,7 @@ function Index() {
 
     //                      effect                    //
     useEffect ( () => {
-        const {accessToken} = cookies;
+        const accessToken = cookies.accessToken;
         if(accessToken) navigator(LOCAL_ABSOLUTE_PATH);
         else navigator(AUTH_ABSOLUTE_PATH);
     }, []);
