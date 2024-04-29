@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import './style.css';
 import SignInBackGround from 'src/assets/image/sign-in-background.png';
 import SignUpBackGround from 'src/assets/image/sign-up-background.png';
@@ -8,8 +8,30 @@ import { EmailAuthCheckRequestDto, EmailAuthRequestDto, IdCheckRequestDto, SignI
 import ResponseDto from "src/apis/response.dto";
 import { SignInResponseDto } from "src/apis/auth/dto/response";
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { LOCAL_ABSOLUTE_PATH } from "src/constant";
+
+//                            component                                //
+export function Sns () {
+
+    //                            state                                //
+    const {accessToken, expires} = useParams();
+    const [cookies, setCookies] = useCookies();    
+
+    //                            function                                //
+    const navigator = useNavigate();
+
+    //                            effect                                //
+    useEffect (() => {
+        if(!accessToken || !expires) return;
+        const expiration = new Date(Date.now() + (Number(expires) * 1000));
+        setCookies('accessToken', accessToken, { path: '/' , expires: expiration});
+
+        navigator(LOCAL_ABSOLUTE_PATH);
+    }, []);
+
+    return <></>;
+}
 
 type AuthPage = 'sign-in' | 'sign-up';
 
@@ -17,14 +39,15 @@ interface SnsContainerProps {
     title: string;
 }
 
+//                            component                                //
 function SnsContainer ({ title }: SnsContainerProps) {
 
+    //                           event handler                           //
     const onSnsButtonClickHandler = (type: 'kakao' | 'naver') => {
-        if(type === 'kakao') window.location.href = 'https://developers.kakao.com/';
-        if(type === 'naver') window.location.href = 'https://developers.naver.com/';
+        window.location.href = 'http://localhost:4000/api/v1/auth/oauth2/' + type;
     };
 
-
+    //                                   render                                  //
     return (
         <div className="authentication-sns-container">
             <div className="sns-container-title label">{title}</div>
