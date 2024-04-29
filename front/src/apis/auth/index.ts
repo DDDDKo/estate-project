@@ -18,7 +18,7 @@ import ResponseDto from "../response.dto";
 import { requestErrorHandler, requestHandler } from "..";
 
 // function: 로그인 API 함수
-export const SignInRequest = async (requestBody: SignInRequestDto) => {
+export const signInRequest = async (requestBody: SignInRequestDto) => {
     const result = await axios.post(SIGN_IN_REQUEST_URL, requestBody)
         .then(requestHandler<SignInResponseDto>)
         .catch(requestErrorHandler);
@@ -27,7 +27,7 @@ export const SignInRequest = async (requestBody: SignInRequestDto) => {
 };
 
 // function: 아이디 중복 확인 API 함수
-export const IdCheckRequest = async (requestBody: IdCheckRequestDto) => {
+export const idCheckRequest = async (requestBody: IdCheckRequestDto) => {
     const result = await axios.post(ID_CHECK_REQUEST_URL, requestBody)
         .then(requestHandler<ResponseDto>)
         .catch(requestErrorHandler);
@@ -36,7 +36,7 @@ export const IdCheckRequest = async (requestBody: IdCheckRequestDto) => {
 };
 
 // function: 이메일 인증 API 함수
-export const EmailAuthRequest = async (requestBody: EmailAuthRequestDto) => {
+export const emailAuthRequest = async (requestBody: EmailAuthRequestDto) => {
     const result = await axios.post(EMAIL_AUTH_REQUEST_URL, requestBody)
         .then(requestHandler<ResponseDto>)
         .catch(requestErrorHandler);
@@ -45,7 +45,7 @@ export const EmailAuthRequest = async (requestBody: EmailAuthRequestDto) => {
 };
 
 // function: 이메일 인증 확인 API 함수
-export const EmailAuthCheckRequest = async (requestBody: EmailAuthCheckRequestDto) => {
+export const emailAuthCheckRequest = async (requestBody: EmailAuthCheckRequestDto) => {
     const result = await axios.post(EMAIL_AUTH_CHECK_REQUEST_URL, requestBody)
         .then(requestHandler<ResponseDto>)
         .catch(requestErrorHandler)
@@ -54,7 +54,7 @@ export const EmailAuthCheckRequest = async (requestBody: EmailAuthCheckRequestDt
 }
 
 // function: 회원가입 API 함수
-export const SingUpRequest = async(requestBody: SignUpRequestDto) => {
+export const singUpRequest = async(requestBody: SignUpRequestDto) => {
     const result = await axios.post(SIGN_UP_REQUEST_URL, requestBody)
         .then(requestHandler<ResponseDto>)
         .catch(requestErrorHandler)
