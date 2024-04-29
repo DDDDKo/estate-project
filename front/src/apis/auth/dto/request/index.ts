@@ -24,6 +24,6 @@ export interface EmailAuthCheckRequestDto{
 export interface SignUpRequestDto{
     userId: string;
     userPassword: string;
-    useEmail: string;
+    userEmail: string;
     authNumber: string;
 }

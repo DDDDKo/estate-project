@@ -3,8 +3,8 @@ import './style.css';
 import SignInBackGround from 'src/assets/image/sign-in-background.png';
 import SignUpBackGround from 'src/assets/image/sign-up-background.png';
 import InputBox from "src/components/Inputbox";
-import { EmailAuthCheckRequest, EmailAuthRequest, IdCheckRequest } from "src/apis/auth";
-import { EmailAuthCheckRequestDto, EmailAuthRequestDto, IdCheckRequestDto } from "src/apis/auth/dto/request";
+import { EmailAuthCheckRequest, EmailAuthRequest, IdCheckRequest, SingUpRequest } from "src/apis/auth";
+import { EmailAuthCheckRequestDto, EmailAuthRequestDto, IdCheckRequestDto, SignUpRequestDto } from "src/apis/auth/dto/request";
 import ResponseDto from "src/apis/response.dto";
 
 type AuthPage = 'sign-in' | 'sign-up';
@@ -43,7 +43,6 @@ function SignIn ({ onLinkClickHandler } : Props) {
     //              state               //
     const [id, setId] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-
     const [message, setMessage] = useState<string>('');
 
     //          event handler           //
@@ -173,6 +172,26 @@ function SignUp ({ onLinkClickHandler } : Props) {
         setAuthNumberCheck(authNumberCheck);
         setAuthNumberError(authNumberError);
     };
+    
+    const signUpResponse = (result: ResponseDto | null) => {
+        const message = 
+            !result ? '서버에 문제가 있습니다.' :
+            result.code === 'VF' ? '입력 형식이 맞지 않습니다.' :
+            result.code === 'DI' ? '이미 사용중인 아이디입니다.' :
+            result.code === 'DE' ? '중복된 이메일입니다.' :
+            result.code === 'AF' ? '인증번호가 일치하지 않습니다.' :
+            result.code === 'DBE' ? '서버에 문제가 있습니다.' :
+            result.code === 'SU' ? '회원가입이 성공하셨습니다.' : '';
+
+        const isSuccess = result && result.code === 'SU';
+        if( !isSuccess) {
+            alert(message);
+            return;
+        };
+        
+        alert('회원가입에 성공했습니다.');
+        onLinkClickHandler();
+    }
 
     //                                       event handler                                           //
     const onIdChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -259,15 +278,21 @@ function SignUp ({ onLinkClickHandler } : Props) {
 
     const onAuthNumberButtonClickHandler = () => {
         if(!authNumberButtonStatus) return;
-        if(!email || !email.trim()) return;
+        if(!authNumber) return;
 
-        const requestBody: EmailAuthCheckRequestDto = {userEmail: email, authNumber: authNumber};
+        const requestBody: EmailAuthCheckRequestDto = {userEmail: email, authNumber};
         EmailAuthCheckRequest(requestBody).then(emailAuthCheckResponse);
     };
 
     const onSignInButtonClickHandler = () => {
         if(!isSignUpActive) return;
+        if(!id || !password || !passwordCheck || !email || !authNumber) {
+            alert('모든 내용을 입력해주세요.');
+            return;
+        }
         
+        const requestBody: SignUpRequestDto = {userId: id, userPassword: password, userEmail:email, authNumber}
+        SingUpRequest(requestBody).then(signUpResponse);
     };
 
     //                      render                    //
