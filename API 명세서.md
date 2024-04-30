@@ -525,7 +525,7 @@ Content-Type: application/json;charset=UTF-8
 클라이언트로부터 Request Header의 Authorization 필드로 Bearer 토큰을 포함하여 요청을 받으면 해당 토큰의 작성자(subject)에 해당하는 사용자 정보를 반환합니다. 성공시에는 사용자의 아이디와 권한을 반환합니다. 인증 실패 및 데이터베이스 에러가 발생할 수 있습니다.
 
 - method : **GET**  
-- URL : **/**  
+- URL : **/api/v1/user**  
 
 ##### Request
 
