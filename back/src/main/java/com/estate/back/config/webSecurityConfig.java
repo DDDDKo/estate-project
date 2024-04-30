@@ -48,6 +48,10 @@ public class webSecurityConfig {
             .cors(cors -> cors
                 .configurationSource(corsConfigurationSource())
                 )
+                .authorizeHttpRequests(request -> request
+                    .requestMatchers("/", "/api/v1/auth/**", "/oauth2/callback/*").permitAll()
+                    .anyRequest().authenticated()
+                )
                 .oauth2Login(oauth2 -> oauth2
                     .authorizationEndpoint(endpoint -> endpoint.baseUri("/api/v1/auth/oauth2"))
                     .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
