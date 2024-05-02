@@ -759,7 +759,7 @@ curl -v -X GET "http://localhost:4000/api/v1/board/list" \
 | name | type | description | required |
 |---|:---:|:---:|:---:|
 | receptionNumber | int | 접수 번호 | O |
-| status | Boolean | 상태 | O |
+| status | boolean | 상태 | O |
 | title | String | 제목 | O |
 | writerId | String | 작성자 아이디</br>(첫글자를 제외한 나머지 문자는 *) | O |
 | writeDatetime | String | 작성일</br>(yy.mm.dd 형태) | O |
