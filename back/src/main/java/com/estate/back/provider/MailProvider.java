@@ -2,7 +2,6 @@ package com.estate.back.provider;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.stereotype.Component;
 
 import jakarta.mail.MessagingException;
