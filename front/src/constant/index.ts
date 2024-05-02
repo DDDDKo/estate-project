@@ -32,3 +32,7 @@ export const SIGN_UP_REQUEST_URL = `${SEVER_AUTH_MODULE_URL}/sign-up`;
 export const SEVER_USER_MODULE_URL = `${SEVER_API_URL}/user`;
 
 export const GET_SIGN_IN_USER_REQUEST_URL = `${SEVER_USER_MODULE_URL}/`;
+
+export const SEVER_BOARD_MODULE_URL = `${SEVER_API_URL}/board`;
+
+export const POST_BOARD_REQUEST_URL = `${SEVER_BOARD_MODULE_URL}/`

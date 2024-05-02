@@ -27,10 +27,12 @@
     outline: none;
     background: none;
 
+    width: 100%;
+
     font-family: Inter;
     font-size: 16px;
     font-weight: 400;
-    line-height: 75%;
+    line-height: 175%;
 
     color: rgba(64, 64, 64, 1);
 }
