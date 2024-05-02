@@ -90,9 +90,10 @@ export default function ServiceContainer() {
     const { setLoginUserId, setLoginUserRole } = useUserStore();
     const [cookies] = useCookies();
     const [path, setPath] = useState<Path>('');
-    const navigator = useNavigate();
 
     //                                       function                                        //
+    const navigator = useNavigate();
+
     const getSignInUserResponse = (result: GetSignInResponseDto | ResponseDto | null) => {
 
         const message = 
@@ -102,6 +103,7 @@ export default function ServiceContainer() {
 
         if(!result || result.code !== 'SU') {
             alert(message);
+            navigator(AUTH_ABSOLUTE_PATH);
             return;
         }
 
@@ -123,11 +125,14 @@ export default function ServiceContainer() {
 
     useEffect(() => {
         
-        if(!cookies.accessToken) navigator(AUTH_ABSOLUTE_PATH);
+        if(!cookies.accessToken) {
+            navigator(AUTH_ABSOLUTE_PATH);
+            return;
+        }
 
         getSignInUserRequest(cookies.accessToken).then(getSignInUserResponse);
 
-    }, [cookies]);
+    }, [cookies.accessToken]);
 
 
     //                                       render                                        //
