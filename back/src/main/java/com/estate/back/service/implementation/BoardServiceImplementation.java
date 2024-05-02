@@ -25,7 +25,7 @@ public class BoardServiceImplementation implements BoardService{
         try{
 
             boolean isExistUserId = userRepository.existsByUserId(userId);
-            if(isExistUserId) return ResponseDto.authenticationFailed();
+            if(!isExistUserId) return ResponseDto.authenticationFailed();
 
             BoardEntity boardEntity = new BoardEntity(dto, userId);
 

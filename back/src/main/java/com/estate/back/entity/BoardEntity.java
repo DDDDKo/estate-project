@@ -33,7 +33,7 @@ public class BoardEntity {
     private String writerId;
     private String writeDatetime;
     private Integer viewCount;
-    private String commnet;
+    private String comment;
 
     public BoardEntity (PostBoardReqeustDto dto, String userId){
         Date now = Date.from(Instant.now());
@@ -46,6 +46,5 @@ public class BoardEntity {
         this.writerId = userId;
         this.writeDatetime = writeDateTime;
         this.viewCount = 0;
-        this.commnet = null;
     }
 }
