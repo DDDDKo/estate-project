@@ -1,5 +1,11 @@
 package com.estate.back.entity;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
+
+import com.estate.back.dto.request.board.PostBoardReqeustDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,4 +34,18 @@ public class BoardEntity {
     private String writeDatetime;
     private Integer viewCount;
     private String commnet;
+
+    public BoardEntity (PostBoardReqeustDto dto, String userId){
+        Date now = Date.from(Instant.now());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String writeDateTime = simpleDateFormat.format(now);
+
+        this.status = false;
+        this.title = dto.getTitle();
+        this.content = dto.getContents();
+        this.writerId = userId;
+        this.writeDatetime = writeDateTime;
+        this.viewCount = 0;
+        this.commnet = null;
+    }
 }

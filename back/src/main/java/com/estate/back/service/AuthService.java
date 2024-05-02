@@ -1,7 +1,6 @@
 package com.estate.back.service;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
 import com.estate.back.dto.request.auth.EmailAuthCheckRequestDto;
 import com.estate.back.dto.request.auth.EmailAuthRequestDto;
@@ -11,7 +10,6 @@ import com.estate.back.dto.request.auth.SignUpRequestDto;
 import com.estate.back.dto.response.ResponseDto;
 import com.estate.back.dto.response.auth.SignInResponseDto;
 
-@Service
 public interface AuthService {
     ResponseEntity<? super SignInResponseDto>signIn(SignInRequestDto dto);
     ResponseEntity<ResponseDto> idCheck (IdCheckRequestDto dto);
