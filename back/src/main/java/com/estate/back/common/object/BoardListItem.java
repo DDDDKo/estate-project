@@ -19,9 +19,9 @@ public class BoardListItem {
     private Integer viewCount;
 
     private BoardListItem(BoardEntity boardEntity) throws Exception {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date dateTime = simpleDateFormat.parse(boardEntity.getWriteDatetime());
-        simpleDateFormat = new SimpleDateFormat("yy-MM-dd");
+        simpleDateFormat = new SimpleDateFormat("yy.MM.dd");
         String writeDateTime = simpleDateFormat.format(dateTime);
 
         String writerId = boardEntity.getWriterId();
