@@ -6,10 +6,10 @@ import Authentication, { Sns } from "./views/Authentication";
 import ServiceContainer from "./layouts/ServiceContainer";
 import Local from "./views/service/Local";
 import Ratio from "./views/service/Ratio";
-import QnAList from "./views/service/qna/QnAList";
-import QnAWrite from "./views/service/qna/QnAWrite";
-import QnADetail from "./views/service/qna/QnADetail";
-import QnAUpdate from "./views/service/qna/QnAUpdate";
+import QnAList from "./views/service/qna/QnaList";
+import QnAWrite from "./views/service/qna/QnaWrite";
+import QnADetail from "./views/service/qna/QnaDetail";
+import QnAUpdate from "./views/service/qna/QnaUpdate";
 import NotFound from "./views/NotFound";
 import { useCookies } from "react-cookie";
 
