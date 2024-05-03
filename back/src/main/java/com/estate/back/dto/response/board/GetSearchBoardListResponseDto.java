@@ -16,11 +16,11 @@ import lombok.Getter;
 @Getter
 public class GetSearchBoardListResponseDto extends ResponseDto {
     
-    private List<BoardListItem> boardListItems;
+    private List<BoardListItem> boardList;
 
     private  GetSearchBoardListResponseDto(List<BoardEntity> boardEntities) throws Exception{
         super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
-        this.boardListItems = BoardListItem.getList(boardEntities);
+        this.boardList = BoardListItem.getList(boardEntities);
     }
 
     public static ResponseEntity<GetSearchBoardListResponseDto> success (List<BoardEntity> boardEntities) throws Exception {
