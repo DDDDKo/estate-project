@@ -4,12 +4,35 @@ import React, { useEffect, useState } from "react";
 import "./style.css";
 import { useUserStore } from "src/stores";
 import { useNavigate } from "react-router";
-import { AUTH_ABSOLUTE_PATH, COUNT_PER_PAGE, COUNT_PER_SECTION, QNA_WRITE_ABSOLUTE_PATH } from "src/constant";
+import { AUTH_ABSOLUTE_PATH, COUNT_PER_PAGE, COUNT_PER_SECTION, QNA_DETALE_ABSOLUTE_PATH, QNA_WRITE_ABSOLUTE_PATH } from "src/constant";
 import { BoardListItem } from "src/types";
 import { getBoardListRequest } from "src/apis/board";
 import { useCookies } from "react-cookie";
 import { GetBoardListResponseDto } from "src/apis/board/dto/response";
 import ResponseDto from "src/apis/response.dto";
+//                              component                              //
+function ListItem ({ receptionNumber, status, title, writerId, writeDatetime, viewCount }: BoardListItem) {
+
+    //                              event handler                              //
+    const navigator = useNavigate();
+
+    //                              event handler                              //
+    const onClickHandler = () => navigator(QNA_DETALE_ABSOLUTE_PATH(receptionNumber));
+
+    //                              render                              //
+    return(
+        <div className="qna-list-table-tr" onClick={onClickHandler}>
+            <div className="qna-list-table-reception-number">{receptionNumber}</div>
+            <div className="qna-list-table-reception-status">
+                {status ? <div className="disable-bedge">완료</div> : <div className="primary-bedge">접수</div>}
+            </div>
+            <div className="qna-list-table-reception-title" style={{ textAlign: "left" }}>{title}</div>
+            <div className="qna-list-table-reception-id">{writerId}</div>
+            <div className="qna-list-table-reception-write-date">{writeDatetime}</div>
+            <div className="qna-list-table-reception-viewcount">{viewCount}</div>
+        </div>
+    );
+};
 
 //                              component                              //
 export default function QnaList() {
@@ -43,10 +66,10 @@ export default function QnaList() {
             return;
         }
 
-        const {boardList} = result as GetBoardListResponseDto;
-        setBoardList(boardList);
+        const {boardListItems} = result as GetBoardListResponseDto;
+        setBoardList(boardListItems);
 
-        const totalLength = boardList.length
+        const totalLength = boardListItems.length
         setTotalLength(totalLength);
 
         const totalPage = Math.floor((totalLength - 1) / COUNT_PER_PAGE) + 1;
@@ -57,17 +80,17 @@ export default function QnaList() {
 
         const startIndex = (currentPage - 1) * COUNT_PER_PAGE;
         let endIndex = currentPage * COUNT_PER_PAGE;
-        if(endIndex > totalLength - 1) endIndex = totalLength;
-        const viewList = boardList.slice(startIndex, endIndex);
+        if (endIndex > totalLength - 1) endIndex = totalLength;
+        const viewList = boardListItems.slice(startIndex, endIndex);
         setViewList(viewList);
 
-        const startPage = (currentSection * COUNT_PER_SECTION) - (COUNT_PER_PAGE -1);
+        const startPage = (currentSection * COUNT_PER_SECTION) - (COUNT_PER_SECTION - 1);
         let endPage = currentSection * COUNT_PER_SECTION;
-        if(endPage > totalPage) endPage = totalPage;
+        if (endPage > totalPage) endPage = totalPage;
         const pageList: number[] = [];
         for (let page = startPage; page <= endPage; page++) pageList.push(page);
         setPageList(pageList);
-        
+
     };
 
     //                              event handler                              //
@@ -110,24 +133,18 @@ export default function QnaList() {
                     <div className="qna-list-table-reception-write-date">작성일</div>
                     <div className="qna-list-table-reception-viewcount">조회수</div>
                 </div>
-                <div className="qna-list-table-tr">
-                    <div className="qna-list-table-reception-number">접수번호</div>
-                    <div className="qna-list-table-reception-status">
-                        <div className="primary-bedge">접수</div>
-                    </div>
-                    <div className="qna-list-table-reception-title" style={{ textAlign: "left" }}>제목</div>
-                    <div className="qna-list-table-reception-id">작성자</div>
-                    <div className="qna-list-table-reception-write-date">작성일</div>
-                    <div className="qna-list-table-reception-viewcount">조회수</div>
-                </div>
+                {viewList.map(item => <ListItem {...item} />)}
             </div>
             <div className="qna-list-bottom">
                 <div style={{width: '299px'}}></div>
                 <div className="qna-list-pagenation">
                     <div className="qna-list-page-left"></div>
                     <div className="qna-list-page-box">
-                        <div className="qna-list-page-active">1</div>
-                        <div className="qna-list-page">1</div>
+                        {pageList.map(page =>
+                            page === currentPage ?
+                            <div className="qna-list-page-active">{page}</div> :
+                            <div className="qna-list-page">{page}</div>
+                        )}
                     </div>
                     <div className="qna-list-page-right"></div>
                 </div>
