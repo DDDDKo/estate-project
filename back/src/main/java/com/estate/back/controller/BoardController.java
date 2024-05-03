@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.estate.back.dto.request.board.PostBoardReqeustDto;
 import com.estate.back.dto.response.ResponseDto;
 import com.estate.back.dto.response.board.GetBoardListResponseDto;
+import com.estate.back.dto.response.board.GetSearchBoardListResponseDto;
 import com.estate.back.service.BoardService;
 
 import jakarta.validation.Valid;
@@ -34,8 +35,16 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<? super GetBoardListResponseDto> getBoard () {
-        ResponseEntity<? super GetBoardListResponseDto> response = boardService.getBoard();
+    public ResponseEntity<? super GetBoardListResponseDto> getBoardList () {
+        ResponseEntity<? super GetBoardListResponseDto> response = boardService.getBoardList();
+        return response;
+    }
+
+    @GetMapping("/list/{searchWord}")
+    public ResponseEntity<? super GetSearchBoardListResponseDto> getSearchBoardList (
+        @PathVariable ("searchWord") String searchWord 
+    ) {
+        ResponseEntity<? super GetSearchBoardListResponseDto> response = boardService.getSearchBoardList(searchWord);
         return response;
     }
 }

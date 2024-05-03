@@ -12,5 +12,8 @@ import com.estate.back.entity.BoardEntity;
 public interface BoardRepository extends JpaRepository<BoardEntity, Integer>{
 
     List<BoardEntity> findByOrderByReceptionNumberDesc ();
+    // Contains / Containing / isContaining : 다 똑같은건데 LIKE '%word%' 형태
+    // StartingWith : LIKE 'word%' 형태
+    List<BoardEntity> findByTitleContainsOrderByReceptionNumberDesc (String SearchWord);
 
 }
