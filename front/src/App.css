@@ -41,6 +41,30 @@
     opacity: 0.85;
 }
 
+.toggle {
+    width: 35px;
+    height: 20px;
+    background-image: url("./assets/image/toggle.png");
+    background-size: 100% 100%;
+}
+
+.toggle:hover {
+    cursor: pointer;
+    opacity: 0.85;
+}
+
+.toggle-active {
+    width: 35px;
+    height: 20px;
+    background-image: url("./assets/image/toggle-active.png");
+    background-size: 100% 100%;
+}
+
+.toggle-active:hover {
+    cursor: pointer;
+    opacity: 0.85;
+}
+
 .disable-button {
     box-sizing: border-box;
     display: flex;
