@@ -35,4 +35,6 @@ export const GET_SIGN_IN_USER_REQUEST_URL = `${SEVER_USER_MODULE_URL}/`;
 
 export const SEVER_BOARD_MODULE_URL = `${SEVER_API_URL}/board`;
 
-export const POST_BOARD_REQUEST_URL = `${SEVER_BOARD_MODULE_URL}/`
+export const POST_BOARD_REQUEST_URL = `${SEVER_BOARD_MODULE_URL}/`;
+export const GET_BOARD_LIST_URL = `${SEVER_BOARD_MODULE_URL}/list`;
+export const GET_SEARCH_BOARD_LIST_URL = (searchWord: string) =>`${GET_BOARD_LIST_URL}/${searchWord}`;

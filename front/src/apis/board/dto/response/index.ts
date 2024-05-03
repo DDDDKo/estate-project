@@ -1,7 +1,10 @@
-import ResponseDto from 'src/apis/response.dto';
+import ResponseDto from "src/apis/response.dto";
+import { BoardListItem } from "src/types";
 
-// description: 로그인 Response Body DTO 
-export interface SignInResponseDto extends ResponseDto {
-    accessToken: string;
-    expires: number;
+export interface GetBoardListResponseDto extends ResponseDto {
+    boardList: BoardListItem[];
+}
+
+export interface GetSearchBoardListResponseDto extends ResponseDto {
+    boardList: BoardListItem[];
 }
