@@ -44,6 +44,11 @@ public class ResponseDto {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     };
 
+    public static ResponseEntity<ResponseDto> writtenComment () {
+        ResponseDto responseBody = new ResponseDto(ResponseCode.WRITTEN_COMMENT, ResponseMessage.WRITTEN_COMMENT);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+    };
+
     public static ResponseEntity<ResponseDto> duplicatedId () {
         ResponseDto responseBody = new ResponseDto(ResponseCode.DUPLICATED_ID, ResponseMessage.DUPLICATED_ID);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);

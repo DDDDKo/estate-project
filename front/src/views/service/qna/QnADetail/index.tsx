@@ -75,6 +75,8 @@ export default function QnADetail() {
         setStatus(status);
         setComment(comment);
     };
+    //                    event handler                    //
+    const listOnClickHandler = () => navigator(QNA_LIST_ABSOLUTE_PATH);
 
     //                    effect                    //
     useEffect(() => {
@@ -83,14 +85,14 @@ export default function QnADetail() {
     }, []);
 
     //                    render                    //
+    const coverdWriterId = writerId !== '' && (writerId[0] + '*'.repeat(writerId.length - 1));
     return (
         <div id='qna-detail-wrapper'>
             <div className='qna-detail-main-box'>
                 <div className='qna-detail-top-box'>
                     <div className='qna-detail-title-box'>{title}</div>
                     <div className='qna-detail-info-box'>
-                        
-                        <div className='qna-detail-info'>작성자 {writerId}</div>
+                        <div className='qna-detail-info'>작성자 {coverdWriterId}</div>
                         <div className='qna-detail-info-divider'>{'\|'}</div>
                         <div className='qna-detail-info'>작성일 {writeDate}</div>
                         <div className='qna-detail-info-divider'>{'\|'}</div>
@@ -114,7 +116,7 @@ export default function QnADetail() {
             </div>
             }
             <div className='qna-detail-button-box'>
-                <div className='primary-button'>목록보기</div>
+                <div className='primary-button' onClick={listOnClickHandler}>목록보기</div>
                 {loginUserId === writerId &&
                 <div className='qna-detail-owner-button-box'>
                     <div className='second-button'>수정</div>

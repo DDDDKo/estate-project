@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.estate.back.dto.request.board.PostBoardReqeustDto;
+import com.estate.back.dto.request.board.PostCommentRequestDto;
 import com.estate.back.dto.response.ResponseDto;
 import com.estate.back.dto.response.board.GetBoardListResponseDto;
 import com.estate.back.dto.response.board.GetBoardResponseDto;
@@ -36,6 +37,15 @@ public class BoardController {
         return response;
     }
 
+    @PostMapping("{receptionNumber}/comment")
+    public ResponseEntity<ResponseDto> postComment (
+        @RequestBody @Valid PostCommentRequestDto requestBody,
+        @PathVariable("receptionNumber") int receptionNumber
+    ){
+        ResponseEntity<ResponseDto> response = boardService.postComment(requestBody, receptionNumber);
+        return response;
+    }
+
     @GetMapping("/list")
     public ResponseEntity<? super GetBoardListResponseDto> getBoardList () {
         ResponseEntity<? super GetBoardListResponseDto> response = boardService.getBoardList();
@@ -52,7 +62,7 @@ public class BoardController {
 
     @GetMapping("/{receptionNumber}")
     public ResponseEntity<? super GetBoardResponseDto> getBoard (
-    @PathVariable("receptionNumber") int receptionNumber
+        @PathVariable("receptionNumber") int receptionNumber
     ){
         ResponseEntity<? super GetBoardResponseDto> response = boardService.getBoard(receptionNumber);
         return response;
