@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import './style.css'
 import { useUserStore } from "src/stores";
-import { getBoardRequest, increaseViewCountRequest } from "src/apis/board";
+import { getBoardRequest, increaseViewCountRequest, postCommentRequest } from "src/apis/board";
 import { useCookies } from "react-cookie";
 import { useNavigate, useParams } from "react-router";
 import ResponseDto from "src/apis/response.dto";
 import { AUTH_ABSOLUTE_PATH, QNA_LIST_ABSOLUTE_PATH } from "src/constant";
 import { GetBoardResponseDto } from "src/apis/board/dto/response";
+import { PostCommentRequestDto } from "src/apis/board/dto/request";
+import { access } from "fs";
 
 //                    component                    //
 export default function QnADetail() {
     //                    state                    //
+    const commentRef = useRef<HTMLTextAreaElement | null>(null);
+
     const { loginUserId, loginUserRole } = useUserStore();
     const { receptionNumber } = useParams();
 
@@ -75,12 +79,55 @@ export default function QnADetail() {
         setStatus(status);
         setComment(comment);
     };
+
+    const postCommentResponse = (result: ResponseDto | null, ) => {
+        const message = 
+            !result ? '서버에 문제가 있습니다.' :
+            result.code === 'AF' ? '입력 데이터가 올바르지 않습니다.' :
+            result.code === 'VF' ? '잘못된 접수번호입니다.' :
+            result.code === 'NB' ? '존재하지 않는 접수번호입니다.' :
+            result.code === 'WC' ? '이미 답글이 작성된 게시물입니다.' :
+            result.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+        
+        if(!result || result.code !== 'SU'){
+            alert(message);
+            if (result?.code === 'AF') {
+                navigator(AUTH_ABSOLUTE_PATH);
+                return;
+            }
+            navigator(QNA_LIST_ABSOLUTE_PATH);
+            return;
+        }
+
+        if (!receptionNumber || !cookies.accessToken) return;
+        getBoardRequest(receptionNumber, cookies.accessToken).then(getBoardResponse);
+    };
+
     //                    event handler                    //
     const listOnClickHandler = () => navigator(QNA_LIST_ABSOLUTE_PATH);
 
+    const onCommentChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) =>{
+        if  (status || loginUserRole !== 'ROLE_ADMIN') return;
+        const comment = event.target.value;
+        setComment(comment);
+
+        if  (!commentRef.current)return;
+        commentRef.current.style.height = 'auto';
+        commentRef.current.style.height = `${commentRef.current.scrollHeight}px`;
+    };
+
+    const onCommentSubmitClickHandler = () => {
+        if (!comment || !comment?.trim() ) return;
+        if (!receptionNumber || loginUserRole !== 'ROLE_ADMIN' || !cookies.accessToken) return;
+
+        const requestBody: PostCommentRequestDto = { comment };
+
+        postCommentRequest(receptionNumber, requestBody, cookies.accessToken).then(postCommentResponse);
+    };
+
     //                    effect                    //
     useEffect(() => {
-        if(!cookies.accessToken || !receptionNumber) return;
+        if (!cookies.accessToken || !receptionNumber) return;
         increaseViewCountRequest(receptionNumber, cookies.accessToken).then(increaseViewCountResponse);
     }, []);
 
@@ -104,9 +151,9 @@ export default function QnADetail() {
             {loginUserRole === 'ROLE_ADMIN' && !status &&
             <div className='qna-detail-comment-write-box'>
                 <div className='qna-detail-comment-textarea-box'>
-                    <textarea className='qna-detail-comment-textarea' placeholder='답글을 작성해주세요' />
+                    <textarea ref={commentRef} className='qna-detail-comment-textarea' placeholder='답글을 작성해주세요' value={comment == null ? '' : comment} onChange={onCommentChangeHandler}/>
                 </div>
-                <div className='primary-button'>답글달기</div>
+                <div className='primary-button' onClick={onCommentSubmitClickHandler}>답글달기</div>
             </div>
             }
             {status && 
