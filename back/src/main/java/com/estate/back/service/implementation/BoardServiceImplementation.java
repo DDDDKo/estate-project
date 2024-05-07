@@ -74,7 +74,35 @@ public class BoardServiceImplementation implements BoardService{
 
     @Override
     public ResponseEntity<? super GetBoardResponseDto> getBoard(int receptionNumber) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getBoard'");
+
+        try{
+
+            BoardEntity boardEntity = boardRepository.findByReceptionNumber(receptionNumber);
+            if(boardEntity == null) return ResponseDto.noExistBoard();
+
+            return GetBoardResponseDto.success(boardEntity);
+
+        }catch (Exception exception){
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto> increaseViewCount(int receptionNumber) {
+        try{
+
+            BoardEntity boardEntity = boardRepository.findByReceptionNumber(receptionNumber);
+            if(boardEntity == null) return ResponseDto.noExistBoard();
+
+            boardEntity.IncreaseViewCount();
+            boardRepository.save(boardEntity);
+
+        }catch (Exception exception){
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return ResponseDto.success();
     }
 }

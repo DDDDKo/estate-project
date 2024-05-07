@@ -15,5 +15,6 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer>{
     // Contains / Containing / isContaining : 다 똑같은건데 LIKE '%word%' 형태
     // StartingWith : LIKE 'word%' 형태
     List<BoardEntity> findByTitleContainsOrderByReceptionNumberDesc (String SearchWord);
+    BoardEntity findByReceptionNumber(Integer receptionNumber);
 
 }
