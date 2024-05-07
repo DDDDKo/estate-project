@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.estate.back.dto.request.board.PostBoardReqeustDto;
 import com.estate.back.dto.response.ResponseDto;
 import com.estate.back.dto.response.board.GetBoardListResponseDto;
+import com.estate.back.dto.response.board.GetBoardResponseDto;
 import com.estate.back.dto.response.board.GetSearchBoardListResponseDto;
 import com.estate.back.entity.BoardEntity;
 import com.estate.back.repository.BoardRepository;
@@ -69,5 +70,11 @@ public class BoardServiceImplementation implements BoardService{
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
+    }
+
+    @Override
+    public ResponseEntity<? super GetBoardResponseDto> getBoard(int receptionNumber) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getBoard'");
     }
 }

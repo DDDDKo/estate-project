@@ -10,6 +10,7 @@ import lombok.Getter;
 // 400 필수 데이터 미입력 / VF Varidation Failed.
 // 400 중복된 아이디 / DI Duplicated Id.
 // 400 중복된 이메일 / DE Duplicated Email.
+// 400 불일치 보드 / NB No Exist Board.
 // 401 로그인 정보 불일치 / SF Sign in Failed.
 // 401 인증 실패 / AF Authentication Failed.
 // 500 토큰 생성 실패 / TF Token creation Failed.
@@ -35,6 +36,11 @@ public class ResponseDto {
 
     public static ResponseEntity<ResponseDto> duplicatedEmail () {
         ResponseDto responseBody = new ResponseDto(ResponseCode.DUPLICATED_EMAIL, ResponseMessage.DUPLICATED_EMAIL);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+    };
+
+    public static ResponseEntity<ResponseDto> noExistBoard () {
+        ResponseDto responseBody = new ResponseDto(ResponseCode.NO_EXIST_BOARD, ResponseMessage.NO_EXIST_BOARD);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     };
 
