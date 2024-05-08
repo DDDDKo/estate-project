@@ -1157,18 +1157,11 @@ Content-Type: application/json;charset=UTF-8
 |---|:---:|:---:|:---:|
 | receptionNumber | int | 접수 번호 | O |
 
-###### Request Body
-
-| name | type | description | required |
-|---|:---:|:---:|:---:|
-| comment | String | 답글 내용 | O |
-
 ###### Example
 
 ```bash
-curl -v -X GET "http://localhost:4000/api/v1/board/${receptionNumber}"/comment \
+curl -v -X GET "http://localhost:4000/api/v1/board/${receptionNumber}" \
  -H "Authorization: Bearer {JWT}" \
- -d "comment={comment}"
 ```
 
 ##### Response
@@ -1215,16 +1208,6 @@ Content-Type: application/json;charset=UTF-8
 {
   "code": "NB",
   "message": "No Exist Board."
-}
-```
-
-**응답 : 실패 (이미 작성된 답글)**
-```bash
-HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-{
-  "code": "WC",
-  "message": "Written Comment."
 }
 ```
 
