@@ -139,7 +139,7 @@ public class BoardServiceImplementation implements BoardService{
             if(board == null) return ResponseDto.noExistBoard();
 
             String writerId = board.getWriterId();
-            boolean isWriter = userId.equals(writerId);
+            boolean isWriter = writerId.equals(userId);
             if(!isWriter) return ResponseDto.authorizationFailed();
 
             boardRepository.delete(board);

@@ -52,7 +52,10 @@ export default function QnAWrite() {
     };
 
     const onPostButtonClickHandler = () => {
-        if(!title || !contents) return;
+        if(!title || !contents) {
+            alert("제목과 내용을 모두 입력해주세요.")
+            return;
+        }
         if(!cookies.accessToken) return;
 
         const requestBody:PostBoardRequestDto = { title, contents };

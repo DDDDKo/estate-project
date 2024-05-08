@@ -1,6 +1,6 @@
 import axios from "axios";
 import { PostBoardRequestDto, PostCommentRequestDto } from "./dto/request";
-import { GET_BOARD_LIST_URL, GET_BOARD_URL, GET_SEARCH_BOARD_LIST_URL, INCREASE_VIEW_COUNT_URL, POST_BOARD_REQUEST_URL, POST_COMMENT_REQUEST_URL } from "src/constant";
+import { DELETE_BOARD_URL, GET_BOARD_LIST_URL, GET_BOARD_URL, GET_SEARCH_BOARD_LIST_URL, INCREASE_VIEW_COUNT_URL, POST_BOARD_REQUEST_URL, POST_COMMENT_REQUEST_URL } from "src/constant";
 import { bearerAuthorization, requestErrorHandler, requestHandler } from "..";
 import ResponseDto from "../response.dto";
 import { GetBoardListResponseDto, GetBoardResponseDto, GetSearchBoardListResponseDto } from "./dto/response";
@@ -55,3 +55,11 @@ export const increaseViewCountRequest = async(receptionNumber: string | number, 
         .catch(requestErrorHandler);
     return result;
 }
+
+// function : Q&A 게시물 삭제 API 함수  //
+export const deleteBoardRequest = async(receptionNumber: string | number, accessToken: string) => {
+    const result = await axios.delete(DELETE_BOARD_URL(receptionNumber), bearerAuthorization(accessToken))
+        .then(requestHandler<ResponseDto>)
+        .catch(requestErrorHandler);
+    return result;
+} 

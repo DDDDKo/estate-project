@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import './style.css'
 import { useUserStore } from "src/stores";
-import { getBoardRequest, increaseViewCountRequest, postCommentRequest } from "src/apis/board";
+import { deleteBoardRequest, getBoardRequest, increaseViewCountRequest, postCommentRequest } from "src/apis/board";
 import { useCookies } from "react-cookie";
 import { useNavigate, useParams } from "react-router";
 import ResponseDto from "src/apis/response.dto";
@@ -101,6 +101,26 @@ export default function QnADetail() {
         getBoardRequest(receptionNumber, cookies.accessToken).then(getBoardResponse);
     };
 
+    const deleteBoardResponse = (result: ResponseDto | null) => {
+        const message = 
+            !result ? '서버에 문제가 있습니다.' :
+            result.code === 'AF' ? '권한이 없습니다.' :
+            result.code === 'VF' ? '올바르지 않은 접수번호입니다.' :
+            result.code === 'NB' ? '존재하지 않는 게시글입니다.' :
+            result.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
+        
+        if(!result || result.code !== 'SU'){
+            alert(message);
+            if (result?.code === 'AF') {
+                navigator(AUTH_ABSOLUTE_PATH);
+                return;
+            }
+            navigator(QNA_LIST_ABSOLUTE_PATH);
+            return;
+        }
+        navigator(QNA_LIST_ABSOLUTE_PATH);
+    };
+
     //                    event handler                    //
     const onCommentChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) =>{
         if  (status || loginUserRole !== 'ROLE_ADMIN') return;
@@ -131,11 +151,11 @@ export default function QnADetail() {
     };
 
     const onDeleteClickHandler = () => {
-        if(!receptionNumber || loginUserId !== writerId) return;
+        if(!receptionNumber || loginUserId !== writerId || !cookies.accessToken) return;
         const isConfirm = window.confirm('정말로 삭제하시겠습니까?');
         if(!isConfirm) return;
-        alert('삭제');
-        navigator(QNA_LIST_ABSOLUTE_PATH);
+
+        deleteBoardRequest(receptionNumber, cookies.accessToken).then(deleteBoardResponse);
     };
 
     //                    effect                    //
