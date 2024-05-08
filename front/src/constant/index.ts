@@ -38,7 +38,7 @@ export const SEVER_BOARD_MODULE_URL = `${SEVER_API_URL}/board`;
 export const POST_BOARD_REQUEST_URL = `${SEVER_BOARD_MODULE_URL}/`;
 export const POST_COMMENT_REQUEST_URL = (receptionNumber: string | number) =>`${SEVER_BOARD_MODULE_URL}/${receptionNumber}/comment`;
 export const GET_BOARD_LIST_URL = `${SEVER_BOARD_MODULE_URL}/list`;
-export const GET_SEARCH_BOARD_LIST_URL = (searchWord: string) =>`${GET_BOARD_LIST_URL}/${searchWord}`;
+export const GET_SEARCH_BOARD_LIST_URL = `${GET_BOARD_LIST_URL}/search`;
 export const GET_BOARD_URL = (receptionNumber: string|number) =>`${SEVER_BOARD_MODULE_URL}/${receptionNumber}`;
 export const PUT_BOARD_URL = (receptionNumber: number | string) => `${SEVER_BOARD_MODULE_URL}/${receptionNumber}`;
 export const INCREASE_VIEW_COUNT_URL = (receptionNumber: string|number) =>`${SEVER_BOARD_MODULE_URL}/${receptionNumber}/increase-view-count`;
