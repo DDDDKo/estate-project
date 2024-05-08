@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.estate.back.dto.request.board.PostBoardReqeustDto;
 import com.estate.back.dto.request.board.PostCommentRequestDto;
+import com.estate.back.dto.request.board.PutBoardRequestDto;
 import com.estate.back.dto.response.ResponseDto;
 import com.estate.back.dto.response.board.GetBoardListResponseDto;
 import com.estate.back.dto.response.board.GetBoardResponseDto;
@@ -143,6 +144,31 @@ public class BoardServiceImplementation implements BoardService{
             if(!isWriter) return ResponseDto.authorizationFailed();
 
             boardRepository.delete(board);
+
+        }catch (Exception exception){
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return ResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<ResponseDto> putBoard(PutBoardRequestDto dto, int receptionNumber, String userId) {
+        try{
+            
+            BoardEntity board = boardRepository.findByReceptionNumber(receptionNumber);
+            if(board == null) return ResponseDto.noExistBoard();
+
+            String writerId = board.getWriterId();
+            boolean isWriter = writerId.equals(userId);
+            if(!isWriter) return ResponseDto.authorizationFailed();
+
+            boolean status = board.getStatus();
+            if (status) return ResponseDto.writtenComment();
+
+            board.update(dto);
+            boardRepository.save(board);
 
         }catch (Exception exception){
             exception.printStackTrace();

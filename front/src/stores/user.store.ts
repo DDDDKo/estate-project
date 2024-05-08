@@ -11,7 +11,7 @@ const useUserStore = create<UserStore>(set => ({
     loginUserId: '',
     setLoginUserId: (loginUserId: string) => set(state => ({...state, loginUserId})),
     loginUserRole: '',
-    setLoginUserRole: (loginUserRole: string) => set( state => ({ ...state, loginUserRole })),
+    setLoginUserRole: (loginUserRole: string) => set( state => ({ ...state, loginUserRole})),
 }));
 
 export default useUserStore;

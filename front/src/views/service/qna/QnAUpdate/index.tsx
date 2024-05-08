@@ -1,25 +1,26 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import './style.css'
-import { useUserStore } from "src/stores";
-import { useCookies } from "react-cookie";
-import { useNavigate, useParams } from "react-router";
-import { PostBoardRequestDto } from "src/apis/board/dto/request";
-import { getBoardRequest, postBoardRequest } from "src/apis/board";
-import { GetBoardResponseDto } from "src/apis/board/dto/response";
-import ResponseDto from "src/apis/response.dto";
-import { QNA_LIST_ABSOLUTE_PATH } from "src/constant";
+import { useUserStore } from 'src/stores';
+import { useCookies } from 'react-cookie';
+import { useNavigate, useParams } from 'react-router';
+import { getBoardRequest, postBoardRequest } from 'src/apis/board';
+import { GetBoardResponseDto } from 'src/apis/board/dto/response';
+import ResponseDto from 'src/apis/response.dto';
+import { QNA_LIST_ABSOLUTE_PATH } from 'src/constant';
 
-export default function QnAUpdate() {
-    //                              state                              //
+//                    component                    //
+export default function QnaUpdate() {
+
+    //                    state                    //
     const contentsRef = useRef<HTMLTextAreaElement | null>(null);
-    const {loginUserId, loginUserRole} = useUserStore();
+    const { loginUserId } = useUserStore();
     const { receptionNumber } = useParams();
     const [cookies] = useCookies();
     const [writerId, setWriterId] = useState<string>('');
     const [title, setTitle] = useState<string>('');
     const [contents, setContents] = useState<string>('');
 
-    //                                       function                                           //
+    //                    function                    //
     const navigator = useNavigate();
 
     const getBoardResponse = (result: GetBoardResponseDto | ResponseDto | null) => {
@@ -32,13 +33,19 @@ export default function QnAUpdate() {
             result.code === 'DBE' ? '서버에 문제가 있습니다.' : '';
         
         if (!result || result.code !== 'SU') {
+            alert(message);
             navigator(QNA_LIST_ABSOLUTE_PATH);
             return;
         }
 
-        const { writerId, title, contents } = result as GetBoardResponseDto;
+        const { writerId, title, contents, status } = result as GetBoardResponseDto;
         if (writerId !== loginUserId) {
             alert('권한이 없습니다.');
+            navigator(QNA_LIST_ABSOLUTE_PATH);
+            return;
+        }
+        if (status) {
+            alert('답변이 완료된 게시물입니다.')
             navigator(QNA_LIST_ABSOLUTE_PATH);
             return;
         }
@@ -49,7 +56,7 @@ export default function QnAUpdate() {
 
     };
 
-    //                              event Handler                              //
+    //                    event handler                    //
     const onTitleChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         const title = event.target.value;
         setTitle(title);
@@ -57,9 +64,10 @@ export default function QnAUpdate() {
 
     const onContentsChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
         const contents = event.target.value;
-        if(contents.length > 1000) return;
+        if (contents.length > 1000) return;
         setContents(contents);
-        if(!contentsRef.current) return;
+
+        if (!contentsRef.current) return;
         contentsRef.current.style.height = 'auto';
         contentsRef.current.style.height = `${contentsRef.current.scrollHeight}px`;
     };
@@ -72,22 +80,27 @@ export default function QnAUpdate() {
         if(!cookies.accessToken) return;
     };
 
-    //                              effect                              //
+
+    //                    effect                    //
+    let effectFlag = false;
     useEffect(() => {
         if (!receptionNumber || !cookies.accessToken) return;
-        getBoardRequest(receptionNumber, cookies.accessToken).then(getBoardResponse)
-    }, [])
-    //                              render                              //
+        if (effectFlag) return;
+        effectFlag = true;
+        getBoardRequest(receptionNumber, cookies.accessToken).then(getBoardResponse);
+    }, []);
+    
+    //                    render                    //
     return (
-    <div id="qna-write-wrapper">
+        <div id="qna-write-wrapper">
             <div className='qna-write-top'>
                 <div className='qna-write-title-box'>
-                    <input className='qna-write-title-input' placeholder='제목을 입력해 주세요' value={title} onChange={onTitleChangeHandler}/>
+                    <input className='qna-write-title-input' placeholder='제목을 입력해주세요.' value={title} onChange={onTitleChangeHandler} />
                 </div>
                 <div className='primary-button' onClick={onUpdateButtonClickHandler}>수정</div>
             </div>
             <div className='qna-write-contents-box'>
-                <textarea ref={contentsRef} className='qna-write-contents-textarea' rows={10} placeholder='내용을 입력해주세요/ 1000자' maxLength={1000} value={contents} onChange={onContentsChangeHandler}/>
+                <textarea ref={contentsRef} className='qna-write-contents-textarea' placeholder='내용을 입력해주세요. / 1000자' maxLength={1000} value={contents} onChange={onContentsChangeHandler} />
             </div>
         </div>
     );
