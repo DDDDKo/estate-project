@@ -116,7 +116,7 @@ export default function QnaUpdate() {
             return;
         }
         getBoardRequest(receptionNumber, cookies.accessToken).then(getBoardResponse);
-    }, []);
+    }, [loginUserRole]);
     
     //                    render                    //
     return (
