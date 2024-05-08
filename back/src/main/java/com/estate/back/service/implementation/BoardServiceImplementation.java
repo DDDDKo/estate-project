@@ -130,4 +130,25 @@ public class BoardServiceImplementation implements BoardService{
 
         return ResponseDto.success();
     }
+
+    @Override
+    public ResponseEntity<ResponseDto> deleteBoard(int receptionNumber, String userId) {
+        try{
+            
+            BoardEntity board = boardRepository.findByReceptionNumber(receptionNumber);
+            if(board == null) return ResponseDto.noExistBoard();
+
+            String writerId = board.getWriterId();
+            boolean isWriter = userId.equals(writerId);
+            if(!isWriter) return ResponseDto.authorizationFailed();
+
+            boardRepository.delete(board);
+
+        }catch (Exception exception){
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return ResponseDto.success();
+    }
 }
