@@ -1,9 +1,7 @@
 package com.estate.back.common.object;
 
-import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
-import java.text.SimpleDateFormat;
 
 import com.estate.back.common.util.ChangeDateFormatUtil;
 import com.estate.back.entity.BoardEntity;
