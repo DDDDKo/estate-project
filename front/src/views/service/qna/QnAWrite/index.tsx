@@ -52,7 +52,7 @@ export default function QnAWrite() {
     };
 
     const onPostButtonClickHandler = () => {
-        if(!title || !contents) {
+        if(!title.trim() || !contents.trim()) {
             alert("제목과 내용을 모두 입력해주세요.")
             return;
         }

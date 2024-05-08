@@ -55,6 +55,6 @@ public class BoardEntity {
 
     public void update(PutBoardRequestDto dto) {
         this.title = dto.getTitle();
-        this.comment = dto.getContents();
+        this.content = dto.getContents();
     }
 }
