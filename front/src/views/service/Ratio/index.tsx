@@ -4,14 +4,14 @@ import SelectBox from "src/components/Selectbox";
 import { BarElement, CategoryScale, Chart as ChartJS, Legend, LineElement, LinearScale, PointElement, Tooltip } from "chart.js";
 import { Bar, Line } from "react-chartjs-2";
 
-
 ChartJS.register(
     CategoryScale,
     LinearScale,
     PointElement,
     LineElement,
     BarElement,
-    Tooltip
+    Tooltip,
+    Legend
 );
 
 export default function Ratio() {
@@ -66,34 +66,94 @@ export default function Ratio() {
     const returnData =
         {
             labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
-            datasets: [{
-                label: '매매 평균',
-                data: [255, 224, 242, 224, 225, 200, 255, 211, 224, 232, 225, 226],
-                borderColor: 'rgba(58, 87, 232, 1)',
-                backgroundColor: 'rgba(58, 87, 232, 1)'
-            }]
+            datasets: [
+                {
+                    label: '40 이하',
+                    data: [255, 224, 242, 224, 225, 200, 255, 211, 224, 232, 225, 226],
+                    borderColor: 'rgba(58, 87, 232, 1)',
+                    backgroundColor: 'rgba(58, 87, 232, 1)'
+                },
+                {
+                    label: '40 초과 60이하',
+                    data: [200, 224, 242, 224, 225, 200, 255, 211, 224, 232, 225, 226],
+                    borderColor: 'rgba(0, 203, 93, 1)',
+                    backgroundColor: 'rgba(0, 203, 93, 1)'
+                },
+                {
+                    label: '60 초과 85이하',
+                    data: [210, 224, 242, 224, 225, 200, 255, 211, 224, 232, 225, 226],
+                    borderColor: 'rgba(255, 168, 0, 1)',
+                    backgroundColor: 'rgba(255, 168, 0, 1)'
+                },
+                {
+                    label: '85 초과',
+                    data: [220, 224, 242, 224, 225, 200, 255, 211, 224, 232, 225, 226],
+                    borderColor: 'rgba(255, 84, 64, 1)',
+                    backgroundColor: 'rgba(255, 84, 64, 1)'
+                }
+            ]
         };
 
         const leaseRatioData =
         {
             labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
-            datasets: [{
-                label: '전세 평균',
-                data: [255, 224, 242, 224, 225, 200, 255, 211, 224, 232, 225, 226],
-                borderColor: 'rgba(58, 87, 232, 1)',
-                backgroundColor: 'rgba(58, 87, 232, 1)'
-            }]
+            datasets: [
+                {
+                    label: '40 이하',
+                    data: [255, 224, 242, 224, 225, 200, 255, 211, 224, 232, 225, 226],
+                    borderColor: 'rgba(58, 87, 232, 1)',
+                    backgroundColor: 'rgba(58, 87, 232, 1)'
+                },
+                {
+                    label: '40 초과 60이하',
+                    data: [255, 224, 242, 224, 225, 200, 255, 211, 224, 232, 225, 226],
+                    borderColor: 'rgba(0, 203, 93, 1)',
+                    backgroundColor: 'rgba(0, 203, 93, 1)'
+                },
+                {
+                    label: '60 초과 85이하',
+                    data: [255, 224, 242, 224, 225, 200, 255, 211, 224, 232, 225, 226],
+                    borderColor: 'rgba(255, 168, 0, 1)',
+                    backgroundColor: 'rgba(255, 168, 0, 1)'
+                },
+                {
+                    label: '85 초과',
+                    data: [255, 224, 242, 224, 225, 200, 255, 211, 224, 232, 225, 226],
+                    borderColor: 'rgba(255, 84, 64, 1)',
+                    backgroundColor: 'rgba(255, 84, 64, 1)'
+                }
+            ]
         };
 
         const monthRentRatioData =
         {
             labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
-            datasets: [{
-                label: '월세 평균',
-                data: [255, 224, 242, 224, 225, 200, 255, 211, 224, 232, 225, 226],
-                borderColor: 'rgba(58, 87, 232, 1)',
-                backgroundColor: 'rgba(58, 87, 232, 1)'
-            }]
+            datasets: [
+                {
+                    label: '40 이하',
+                    data: [255, 224, 242, 224, 225, 200, 255, 211, 224, 232, 225, 226],
+                    borderColor: 'rgba(58, 87, 232, 1)',
+                    backgroundColor: 'rgba(58, 87, 232, 1)'
+                },
+                {
+                    label: '40 초과 60이하',
+                    data: [255, 224, 242, 224, 225, 200, 255, 211, 224, 232, 225, 226],
+                    borderColor: 'rgba(0, 203, 93, 1)',
+                    backgroundColor: 'rgba(0, 203, 93, 1)'
+                },
+                {
+                    label: '60 초과 85이하',
+                    data: [255, 224, 242, 224, 225, 200, 255, 211, 224, 232, 225, 226],
+                    borderColor: 'rgba(255, 168, 0, 1)',
+                    backgroundColor: 'rgba(255, 168, 0, 1)'
+                },
+                {
+                    label: '85 초과',
+                    data: [255, 224, 242, 224, 225, 200, 255, 211, 224, 232, 225, 226],
+                    borderColor: 'rgba(255, 84, 64, 1)',
+                    backgroundColor: 'rgba(255, 84, 64, 1)'
+                }
+            ]
         };
 
     //                                       render                                           //
