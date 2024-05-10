@@ -1,5 +1,6 @@
 import ResponseDto from "src/apis/response.dto";
 
+// description: 지역 평균 데이터 불러오기 Response Body DTO 
 export interface GetLocalDataResponseDto extends ResponseDto{
     yearMonth: string[];
     sale: number[];
@@ -7,6 +8,7 @@ export interface GetLocalDataResponseDto extends ResponseDto{
     monthRent: number[];
 }
 
+// description: 비율 데이터 불러오기 Response Body DTO 
 export interface GetRatioDataResponseDto extends ResponseDto{
     yearMonth: string[];
 
