@@ -20,17 +20,11 @@ ChartJS.register(
 
 export default function Ratio() {
 
-    const returnOptions = {
-        responsive: false
-    };
+    const returnOptions = { responsive: false };
 
-    const leaseRatioOptions = {
-        responsive: false
-    };
+    const leaseRatioOptions = { responsive: false };
 
-    const monthRentRatioOptions = {
-        responsive: false
-    };
+    const monthRentRatioOptions = { responsive: false };
 
     //                                       state                                           //
     const [cookies] = useCookies();
@@ -71,6 +65,7 @@ export default function Ratio() {
             monthRentRatio40, monthRentRatio4060, monthRentRatio6085, monthRentRatio85
             } = result as GetRatioDataResponseDto;
         setYearMonth(yearMonth)
+
         setReturn40(return40);
         setReturn4060(return4060);
         setReturn6085(return6085);
@@ -191,45 +186,55 @@ export default function Ratio() {
         };
 
     //                                       render                                           //
+    const returnFalg = 
+        !!return40.length && !!return4060.length && 
+        !!return6085.length  && !!return85.length;
+    const leaseRatioFlag = 
+        !!leaseRatio40.length && !!leaseRatio4060.length &&
+        !!leaseRatio6085.length  && !!leaseRatio85.length;
+    const monthRentRatioFlag = 
+        !!monthRentRatio40.length && !!monthRentRatio4060.length && 
+        !!monthRentRatio6085.length  && !!monthRentRatio85.length;
+    const buttonClass = selectLocal ? 'primary-button' : 'disable-button';
     return(
         <div id="local-wrapper">
             <div className="local-top">
                 <div className="local-search-box">
                     <SelectBox value={selectLocal} onChange={onLocalChangeHandler} />
-                    <div className="primary-button" onClick={onSearchClickHandler}>검색</div>
+                    <div className={buttonClass} onClick={onSearchClickHandler}>검색</div>
                 </div>
                 <div className="local-origin-text">데이터 출처: KOSIS</div>
             </div>
-            { !return40.length && !leaseRatio40.length && !monthRentRatio40.length &&
+            { !returnFalg && !leaseRatioFlag && !monthRentRatioFlag &&
             <div className="local-no-data-text">검색 결과가 없습니다.</div>
             }
-            { return40.length !== 0 &&
+            { returnFalg &&
                 <div className="local-card">
                 <div className="local-card-title-box">
                     <div className="local-card-title">수익률 평균</div>
-                    <div className="local-card-unit">(단위: 백만원)</div>
+                    <div className="local-card-unit">(단위: %)</div>
                 </div>
                 <div className="local-card-chart-box">
                     <Line width={'1086px'} height={'238px'} options={returnOptions} data={returnData} />
                 </div>
             </div>
             }
-            { leaseRatio40.length !== 0 &&
+            { leaseRatioFlag &&
             <div className="local-card">
                 <div className="local-card-title-box">
                     <div className="local-card-title">매매가격 대비 전세 비율</div>
-                    <div className="local-card-unit">(단위: 백만원)</div>
+                    <div className="local-card-unit">(단위: %)</div>
                 </div>
                 <div className="local-card-chart-box">
                     <Bar width={'1086px'} height={'238px'} options={leaseRatioOptions} data={leaseRatioData}/>
                 </div>
             </div>
             }
-            { monthRentRatio40.length !== 0 &&
+            { monthRentRatioFlag &&
             <div className="local-card">
                 <div className="local-card-title-box">
                     <div className="local-card-title">전세가격 대비 월세 보증금 비율</div>
-                    <div className="local-card-unit">(단위: 백만원)</div>
+                    <div className="local-card-unit">(단위: %)</div>
                 </div>
                 <div className="local-card-chart-box">
                     <Line width={'1086px'} height={'238px'} options={monthRentRatioOptions} data={monthRentRatioData}/>
