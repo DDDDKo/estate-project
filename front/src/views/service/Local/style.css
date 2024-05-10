@@ -69,8 +69,9 @@
 
 .local-no-data-text {
     position: absolute;
-    top: 40%;
-    left: 45%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
     font-family: Inter;
     font-size: 16px;
